@@ -56,5 +56,12 @@ namespace GestaoPatrimonios.Repositories
 
             _context.SaveChanges();
         }
+
+        public Localizacao BuscarPorNome(string nomeLocal, Guid areaId)
+        {
+
+            return _context.Localizacao.FirstOrDefault(local => local.NomeLocal.ToLower() == nomeLocal.ToLower() && local.AreaID == areaId
+            );
+        }
     }
 }
