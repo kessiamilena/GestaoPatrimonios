@@ -4,6 +4,7 @@ using GestaoPatrimonios.Contexts;
 using GestaoPatrimonios.Interfaces;
 using GestaoPatrimonios.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//teste explicação da documentação no swagger:
+//builder.Services.AddSwaggerGen(c =>
+//{
+//    //... other Swagger options
+//    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+//    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+//    c.IncludeXmlComments(xmlPath);
+//});
+
 // Áreas
 builder.Services.AddScoped<IAreaRepository, AreaRepository>();
 builder.Services.AddScoped<AreaService>();
@@ -30,6 +40,10 @@ builder.Services.AddScoped<AreaService>();
 // Localizações 
 builder.Services.AddScoped<ILocalizacaoRepository, LocalizacaoRepository>();
 builder.Services.AddScoped<LocalizacaoService>();
+
+// Usuários
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<UsuarioService>();
 
 var app = builder.Build();
 

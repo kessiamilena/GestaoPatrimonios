@@ -1,6 +1,6 @@
 ﻿using GestaoPatrimonios.Applications.Services;
-using GestaoPatrimonios.DTOs.LocalizacaoDto;
 using GestaoPatrimonios.Exceptions;
+using GestaoPatrimonios_v1.DTOs.EnderecoDto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,29 +8,29 @@ namespace GestaoPatrimonios.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LocalizacaoController : ControllerBase
+    public class EnderecoController : ControllerBase
     {
-        private readonly LocalizacaoService _service;
+        private readonly EnderecoService _service;
 
-        public LocalizacaoController(LocalizacaoService service)
+        public EnderecoController(EnderecoService service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public ActionResult<List<ListarLocalizacaoDto>> Listar()
+        public ActionResult<List<ListarEnderecoDto>> Listar()
         {
-            List<ListarLocalizacaoDto> localizacoes = _service.Listar();
-            return Ok(localizacoes);
+            List<ListarEnderecoDto> enderecos = _service.Listar();
+            return Ok(enderecos);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ListarLocalizacaoDto> BuscarPorId(Guid id)
+        public ActionResult<ListarEnderecoDto> BuscarPorId(Guid id)
         {
             try
             {
-                ListarLocalizacaoDto localizacao = _service.BuscarPorId(id);
-                return Ok(localizacao);
+                ListarEnderecoDto endereco = _service.BuscarPorId(id);
+                return Ok(endereco);
             }
             catch (DomainException ex)
             {
@@ -38,26 +38,22 @@ namespace GestaoPatrimonios.Controllers
             }
         }
 
-
-
-        /// <summary>
-        /// Mensagem
-        /// </summary>
         [HttpPost]
-        public ActionResult Adicionar(CriarLocalizacaoDto dto)
+        public ActionResult Adicionar(CriarEnderecoDto dto)
         {
             try
             {
                 _service.Adicionar(dto);
                 return Created();
             }
-            catch (DomainException ex) {
-                 return BadRequest(ex.Message);
+            catch (DomainException ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
         [HttpPut("{id}")]
-        public ActionResult Atualizar(Guid id, CriarLocalizacaoDto dto)
+        public ActionResult Atualizar(Guid id, CriarEnderecoDto dto)
         {
             try
             {
