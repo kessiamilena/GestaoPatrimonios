@@ -25,7 +25,6 @@ namespace GestaoPatrimonios.Applications.Services
                 Logradouro = endereco.Logradouro,
                 Numero = endereco.Numero,
                 Complemento = endereco.Complemento,
-                CEP = endereco.CEP,
                 BairroID = endereco.BairroID
             }).ToList();
 
@@ -41,33 +40,34 @@ namespace GestaoPatrimonios.Applications.Services
                 throw new DomainException("Endereço não encontrado.");
             }
 
-            ListarEnderecoDto enderecoDto = new ListarEnderecoDto
+            return new ListarEnderecoDto
             {
                 EnderecoID = endereco.EnderecoID,
                 Logradouro = endereco.Logradouro,
                 Numero = endereco.Numero,
                 Complemento = endereco.Complemento,
-                CEP = endereco.CEP,
                 BairroID = endereco.BairroID
             };
-
-            return enderecoDto;
         }
 
         public void Adicionar(CriarEnderecoDto dto)
         {
-            Validar.ValidarLogradouro(dto.Logradouro);
+            Validar.ValidarNome(dto.Logradouro);
 
             if (!_repository.BairroExiste(dto.BairroID))
             {
                 throw new DomainException("Bairro informado não existe.");
             }
 
-            Endereco enderecoExistente = _repository.BuscarPorLogradouroENumero(dto.Logradouro, dto.Numero, dto.BairroID);
+            Endereco enderecoExistente = _repository.BuscarPorLogradouroENumero(
+                dto.Logradouro,
+                dto.Numero,
+                dto.BairroID
+            );
 
             if (enderecoExistente != null)
             {
-                throw new DomainException("Já existe um endereço cadastrado com esse logradouro e número nesse bairro.");
+                throw new DomainException("Já existe um endereço com esses dados.");
             }
 
             Endereco endereco = new Endereco
@@ -75,7 +75,6 @@ namespace GestaoPatrimonios.Applications.Services
                 Logradouro = dto.Logradouro,
                 Numero = dto.Numero,
                 Complemento = dto.Complemento,
-                CEP = dto.CEP,
                 BairroID = dto.BairroID
             };
 
@@ -84,7 +83,7 @@ namespace GestaoPatrimonios.Applications.Services
 
         public void Atualizar(Guid enderecoId, CriarEnderecoDto dto)
         {
-            Validar.ValidarLogradouro(dto.Logradouro);
+            Validar.ValidarNome(dto.Logradouro);
 
             Endereco enderecoBanco = _repository.BuscarPorId(enderecoId);
 
@@ -98,17 +97,21 @@ namespace GestaoPatrimonios.Applications.Services
                 throw new DomainException("Bairro informado não existe.");
             }
 
-            Endereco enderecoExistente = _repository.BuscarPorLogradouroENumero(dto.Logradouro, dto.Numero, dto.BairroID);
+            Endereco enderecoExistente = _repository.BuscarPorLogradouroENumero(
+                dto.Logradouro,
+                dto.Numero,
+                dto.BairroID,
+                enderecoId
+            );
 
             if (enderecoExistente != null)
             {
-                throw new DomainException("Já existe um endereço cadastrado com esse logradouro e número nesse bairro.");
+                throw new DomainException("Já existe um endereço com esses dados.");
             }
 
             enderecoBanco.Logradouro = dto.Logradouro;
             enderecoBanco.Numero = dto.Numero;
             enderecoBanco.Complemento = dto.Complemento;
-            enderecoBanco.CEP = dto.CEP;
             enderecoBanco.BairroID = dto.BairroID;
 
             _repository.Atualizar(enderecoBanco);
