@@ -41,6 +41,15 @@ builder.Services.AddScoped<AreaService>();
 builder.Services.AddScoped<ILocalizacaoRepository, LocalizacaoRepository>();
 builder.Services.AddScoped<LocalizacaoService>();
 
+// Cargo
+builder.Services.AddScoped<ICargoRepository, CargoRepository>();
+builder.Services.AddScoped<CargoService>();
+
+// StatusPatrimonio
+builder.Services.AddScoped<IStatusPatrimonioRepository, StatusPatrimonioRepository>();
+builder.Services.AddScoped<StatusPatrimonioService>();
+
+
 // Usuários
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<UsuarioService>();
