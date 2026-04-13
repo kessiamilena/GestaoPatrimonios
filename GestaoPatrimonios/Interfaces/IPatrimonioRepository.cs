@@ -6,16 +6,17 @@ namespace GestaoPatrimonios.Interfaces
     {
         List<Patrimonio> Listar();
         Patrimonio BuscarPorId(Guid patrimonioId);
-
-        // fazer esse com AsQueryable igual foi feito no endereço
-        Patrimonio BuscarPorNumeroPatrimonio(string numeroPatrimonio, Guid? patrimonioId = null);
+        bool BuscarPorNumeroPatrimonio(string numeroPatrimonio);
 
         bool LocalizacaoExiste(Guid localizacaoId);
-        bool TipoPatrimonioExiste(Guid tipoPatrimonioId);
         bool StatusPatrimonioExiste(Guid statusPatrimonioId);
 
         void Adicionar(Patrimonio patrimonio);
-        void Atualizar(Patrimonio patrimonio);
         void AtualizarStatus(Patrimonio patrimonio);
+        void AdicionarLog(LogPatrimonio logPatrimonio);
+
+        Localizacao BuscarLocalizacaoPorNome(string nomeLocalizacao);
+        StatusPatrimonio BuscarStatusPatrimonioPorNome(string nomeStatus);
+        TipoAlteracao BuscarTipoAlteracaoPorNome(string nomeTipo);
     }
 }
