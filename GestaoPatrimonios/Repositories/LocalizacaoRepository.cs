@@ -17,7 +17,9 @@ namespace GestaoPatrimonios.Repositories
         public List<Localizacao> Listar()
         {
             return _context.Localizacao
-                .OrderBy(localizacao =>  localizacao.NomeLocal).ToList();
+                .Include(localizacao => localizacao.Usuario)
+                .OrderBy(localizacao =>  localizacao.NomeLocal)
+                .ToList();
         }
 
         public Localizacao BuscarPorId(Guid localizacaoId)
