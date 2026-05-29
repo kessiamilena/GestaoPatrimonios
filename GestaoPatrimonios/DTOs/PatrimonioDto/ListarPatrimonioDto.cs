@@ -9,5 +9,6 @@
         public string? Imagem { get; set; }
         public Guid LocalizacaoID { get; set; }
         public Guid StatusPatrimonioID { get; set; }
+        public DateTime? DataTransferencia { get; set; }
     }
 }

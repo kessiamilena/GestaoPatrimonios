@@ -1,6 +1,7 @@
 ﻿using GestaoPatrimonios.Contexts;
 using GestaoPatrimonios.Domains;
 using GestaoPatrimonios.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestaoPatrimonios.Repositories
 {
@@ -20,7 +21,9 @@ namespace GestaoPatrimonios.Repositories
 
         public Patrimonio BuscarPorId(Guid patrimonioId)
         {
-            return _context.Patrimonio.Find(patrimonioId);
+            return _context.Patrimonio
+                .Include(patrimonio => patrimonio.LogPatrimonio)
+                .FirstOrDefault(patrimonio => patrimonio.PatrimonioID == patrimonioId);
         }
 
         public bool BuscarPorNumeroPatrimonio(string numeroPatrimonio)
